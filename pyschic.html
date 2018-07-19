@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pyschic Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    
+    <!--
+
+        2. You're going to make a game just like the one in the video. Essentially, the app randomly picks a letter, and the user has to guess which letter the app chose. Put the following text on your page:
+
+        3. Guess what letter I'm thinking of
+
+        4. Wins: (# of times the user has guessed the letter correctly)
+
+        5. Losses: (# of times the user has failed to guess the letter correctly after exhausting all guesses)
+
+        6. Guesses Left: (# of guesses left. This will update)
+
+        7. Your Guesses So Far: (the specific letters that the user typed. Display these until the user either wins or loses.)
+
+        8. When the player wins, increase the Wins counter and start the game over again (without refreshing the page).
+
+        9. When the player loses, increase the Losses counter and restart the game without a page refresh (just like when the user wins).
+
+    -->
+
+    <script>
+        //this is the string that the computer will randomly choose a letter from
+        var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+         
+        //computer randomly chooses a number from the string with a split method
+        //step 1 complete; we now have the randomly generated computer guess
+        var computerGuess = alphabet[Math.floor(Math.random() * alphabet.length)];
+        console.log(computerGuess);
+
+        //initialize variables for tracking the wins, losses, and ties, as well as users previous guess
+        var wins = 0;
+        var losses = 0;
+        var previousGuess = [];
+        var guesses = 9;
+
+
+
+        //this function is run whenever the user presses a key, this tracks the users guess
+        document.onkeyup = function(event) {
+
+            //assign the event ("users key input") to a variable that can be compared to the computer guess
+            var userGuess = event.key;
+
+            //Previous guess is updated with 
+            previousGuess.push(userGuess);
+
+            //computer's choice is compared to the user's guess
+            if(userGuess === "a" || 
+            userGuess === "b"||
+            userGuess === "c" ||
+            userGuess === "d" ||
+            userGuess === "e" ||
+            userGuess === "f" ||
+            userGuess === "g" ||
+            userGuess === "h" ||
+            userGuess === "i" ||
+            userGuess === "j" ||
+            userGuess === "k" ||
+            userGuess === "l" ||
+            userGuess === "m" ||
+            userGuess === "n" ||
+            userGuess === "o" ||
+            userGuess === "p" ||
+            userGuess === "q" ||
+            userGuess === "r" ||
+            userGuess === "s" ||
+            userGuess === "t" ||
+            userGuess === "u" ||
+            userGuess === "v" ||
+            userGuess === "w" ||
+            userGuess === "x" ||
+            userGuess === "y" ||
+            userGuess === "z" )
+            {
+                // compare the computer guess to the user's guess and change the score stats accordingly
+                if(userGuess !== computerGuess){
+                    //subtract number of guesses by -- previousGuess
+                    previousGuess--
+                }
+                if(previousGuess === 0){
+                    //rest the number of guesses back to 9
+                    previousGuess = 9;
+                    //and increment losses++
+                    losses++
+                }
+                if(userGuess === computerGuess){
+                    //increment wins up 
+                    wins++
+                    //nothing done to the losses
+                    //reset the guesses total
+                    previousGuess = 9;
+                }
+            }
+        }
+        
+        //creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/loses/ties
+        var html =
+          "Guess what letter I am thinking of! " +
+          "<p>You chose: " + userGuess + "</p>" +
+          "<p>wins: " + wins + "</p>" +
+          "<p>losses: " + losses + "</p>";
+
+        // Set the inner HTML contents of the #game div to our html string
+        document.querySelector("#game").innerHTML = html;
+
+
+
+    </script>
+    
+</body>
+</html>
