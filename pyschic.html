@@ -28,32 +28,41 @@
         9. When the player loses, increase the Losses counter and restart the game without a page refresh (just like when the user wins).
 
     -->
+        <!--this is the empty div that is updated by javascript-->
+        <div id="game"></div>
 
     <script>
-        //this is the string that the computer will randomly choose a letter from
+        //this is the string that the computer will randomly choose a letter from (it is turned into an array by the split("") method)
         var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
          
-        //computer randomly chooses a number from the string with a split method
+        //computer randomly chooses a number from the string
         //step 1 complete; we now have the randomly generated computer guess
         var computerGuess = alphabet[Math.floor(Math.random() * alphabet.length)];
-        console.log(computerGuess);
+        console.log("this is the pc guess: " + computerGuess);
 
         //initialize variables for tracking the wins, losses, and ties, as well as users previous guess
         var wins = 0;
+        console.log(wins)//just to check
         var losses = 0;
-        var previousGuess = [];
-        var guesses = 9;
+        console.log(losses)//just to check
+        var previousGuess = []; //will hold the user's guesses to be displayed 
+        var guessesLeft = 9;
 
 
 
         //this function is run whenever the user presses a key, this tracks the users guess
+        //document (the DOM) has 3 similar methods; onkeydown onkeypress and onkeyup
         document.onkeyup = function(event) {
 
-            //assign the event ("users key input") to a variable that can be compared to the computer guess
+            //This makes userGuess = the key that the user pressed
             var userGuess = event.key;
+            console.log(userGuess);
 
-            //Previous guess is updated with 
+            //Previous guess is given the key that the user clicked
             previousGuess.push(userGuess);
+            //console is displaying the newly updated previousGuess arrary 
+            console.log("This should be the previous guess list " + previousGuess);
+            
 
             //computer's choice is compared to the user's guess
             if(userGuess === "a" || 
@@ -86,20 +95,27 @@
                 // compare the computer guess to the user's guess and change the score stats accordingly
                 if(userGuess !== computerGuess){
                     //subtract number of guesses by -- previousGuess
-                    previousGuess--
+                    guessesLeft--;
+                    console.log("Guess left " + guessesLeft);
                 }
-                if(previousGuess === 0){
-                    //rest the number of guesses back to 9
-                    previousGuess = 9;
+                if(guessesLeft === 0){
+                    //rest the number of guessesLeft back to 9
+                    guessesLeft = 9;
                     //and increment losses++
-                    losses++
+                    losses++;
+                    console.log(losses);
+                    //clear out the previous guess list
+                    previousGuess=[];
                 }
                 if(userGuess === computerGuess){
                     //increment wins up 
                     wins++
+                    console.log(wins);
                     //nothing done to the losses
-                    //reset the guesses total
-                    previousGuess = 9;
+                    //reset the guessesLeft total
+                    guessesLeft = 9;
+                    //clear out the previous guess list
+                    previousGuess=[];
                 }
             }
         }
@@ -107,11 +123,17 @@
         //creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/loses/ties
         var html =
           "Guess what letter I am thinking of! " +
-          "<p>You chose: " + userGuess + "</p>" +
+          //show the wins
           "<p>wins: " + wins + "</p>" +
-          "<p>losses: " + losses + "</p>";
-
-        // Set the inner HTML contents of the #game div to our html string
+          //show the losses
+          "<p>losses: " + losses + "</p>" +
+          //display the guesses the player has left
+          "<p>guesses left: " + guessesLeft + "</p>" +
+          //show what the user's guesses so far
+          "<p>Your Guesses so far: " + previousGuess + "</p>";
+          // Set the inner HTML contents of the #game div to our html string
+        
+        
         document.querySelector("#game").innerHTML = html;
 
 
