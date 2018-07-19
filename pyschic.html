@@ -118,8 +118,8 @@
                     previousGuess=[];
                 }
             }
-        }
-        
+
+            
         //creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/loses/ties
         var html =
           "Guess what letter I am thinking of! " +
@@ -134,7 +134,10 @@
           // Set the inner HTML contents of the #game div to our html string
         
         
-        document.querySelector("#game").innerHTML = html;
+        document.getElementById("game").innerHTML = html;
+        //you could also use DOM method .querySelector() which targets css selector
+        }
+        
 
 
 
